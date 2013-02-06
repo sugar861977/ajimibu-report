@@ -1,0 +1,8 @@
+{
+  "name": "es6-shim",
+  "version": "0.5.3",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/paulmillr/es6-shim.git"
+  }
+}
