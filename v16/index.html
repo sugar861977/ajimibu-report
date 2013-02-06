@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<title>味見部#16 Chrome Speech API</title>
+		<script src="speak-js/speakClient.js"></script>
+		<script src="speak-js/speakGenerator.js"></script>
+		<script src="speak-js/speakWorker.js"></script>
+		<script type="text/javascript">
+			window.onload=function(){
+				var d = document.getElementById("recogStartButton");
+				d.addEventListener("click",function(){
+					var recognition = new webkitSpeechRecognition();
+					recognition.continuous = true;
+					recognition.interimResults = true;
+					recognition.lang = "ja_JP";
+  					recognition.start();
+
+					recognition.onresult = function(event){
+						 var SpeechGrammarList = recognition.SpeechGrammarList();
+  						 console.log(SpeechGrammarList);
+						 for (var i = event.resultIndex; i < event.results.length; ++i) {
+						 	  var final_transcript;
+						      if (event.results[i].isFinal) {
+						        final_transcript += event.results[i][0].transcript;
+						      } else {
+						        interim_transcript += event.results[i][0].transcript;
+						      }
+
+						      // console.log(event.results[i][0].transcript);
+						      var r = document.getElementById("result");
+						      r.innerHTML += final_transcript;
+
+						 }
+					}
+				},false);
+				
+
+			}
+		</script>
+	</head>
+	<body>
+		<button  type="button" id="recogStartButton">音声認識開始</button>
+		<div id="result"></div>
+		<div id="audio"></div>
+		<input type="button" onclick="speak('hello world!')" value="Say 'Hello World!'" />
+	</body>
+</html>	
