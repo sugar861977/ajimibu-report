@@ -1,7 +1,0 @@
-RewriteEngine On
-# RewriteRule (.*) - [E=APPPATH:"/45m.in/repo/html5/"]
-# RewriteCond %{ENV:APPPATH} [NC]
-# RewriteBase %{REQUEST_URI}
-# RewriteBase /45m.in/repo/html5/
-# RewriteBase /
-RewriteRule ^([0-9]*)$ ./$1
