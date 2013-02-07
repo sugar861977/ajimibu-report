@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Speak.js Demo</title>
+	<script src="speakClient.js"></script>
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script type="text/javascript">
+		// demo : http://www.google.com/intl/en/chrome/demos/speech.html
+		// demo : https://dvcs.w3.org/hg/speech-api/raw-file/tip/speechapi.html
+		// speech.js : https://github.com/mattytemple/speak-js
+		var speech = "";
+		window.onload=function(){
+			var d = document.getElementById("recogStartButton");
+			
+			var r = document.getElementById("spv");
+			d.addEventListener("click",function(){
+				var recognition = new webkitSpeechRecognition();
+				recognition.continuous = true;
+				recognition.interimResults = true;
+				recognition.lang = "ja_JP";
+				recognition.start();
+				var interim_transcript = '';
+				var final_transcript = '';
+				recognition.onresult = function(event){
+					var aaa="";
+					 for (var i = event.resultIndex; i < event.results.length; ++i) {
+					 	  
+					      if (event.results[i].isFinal) {
+					        final_transcript += event.results[i][0].transcript;
+					      } else {
+					        interim_transcript += event.results[i][0].transcript;
+					      }
+					      r.value = final_transcript;
+					      speech = final_transcript;
+					      speak(speech);//, { voice: 'ja' }
+					 }
+				}
+			},false);
+			
+			/*var spv = document.getElementById("spv");
+			spv.addEventListener("click", function(){
+				speak(speech);
+			},false);*/
+		}
+	</script>
+</head>
+<body>
+	<button  type="button" id="recogStartButton">音声認識開始</button>
+	<div id="result"></div>
+	<div id="audio"></div>
+	<input type="button" id="spv" value="Say 'Hello World!'" />
+</body>
+</html>
